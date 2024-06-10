@@ -1,0 +1,30 @@
+.main{
+    margin-top: 50px;
+    border: 1px groove;
+    box-shadow: black;
+    background-color: rgb(255, 255, 255);
+    width: 300px;
+    align-content: center;
+    padding: 30px 30px;
+}
+.b1 {
+    margin-top: 10px;
+    border: none;
+    padding: 10px 32px;
+    font-size: 16px;
+    background-color:skyblue ;}
+
+    input{
+        border: 3px groove;
+        padding: 10px 20px;
+        
+    }
+
+    .span{
+        display: flex;
+        justify-content: space-between;
+    }
+    .t1{
+        color: skyblue;
+        text-decoration: underline;
+    }

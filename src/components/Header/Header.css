@@ -1,0 +1,29 @@
+.header1 {
+    background-color: gray;
+    color: black;
+    width: 100%;
+    height: 100px;
+    justify-content: space-between;
+    display: flex;
+  }
+  .head {
+    padding: 5px 5px;
+  }
+  
+  ul {
+    display: flex;
+    gap: 10px;
+  }
+  
+  li {
+    align-items: end;
+    list-style: none;
+    color: black;
+    font: 1em sans-serif;
+    font-style: normal;
+  }
+  
+  .icon{
+      margin-top: 10px;
+  
+  }
