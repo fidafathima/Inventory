@@ -1,0 +1,89 @@
+/* Main container styling */
+.main {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    margin: auto;
+    margin-top: 50px;
+    border: 1px groove;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Slight shadow for visual depth */
+    background-color: rgb(255, 255, 255);
+    width: 300px;
+    max-width: 90%; /* Adjust width for smaller screens */
+    align-items: center;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+.b1 {
+    margin-top: 10px;
+    border: none;
+    padding: 10px 32px;
+    font-size: 16px;
+    background-color: skyblue;
+    cursor: pointer; /* Pointer cursor for buttons */
+    width: 100%;
+}
+
+/* Input styling */
+input {
+    border: 3px groove;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    margin-bottom: 15px;
+}
+
+/* Flex container for "Sign in" text */
+.span {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+/* Signup link styling */
+.t1 {
+    color: skyblue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .main {
+        width: 80%; /* Slightly wider on smaller screens */
+        padding: 20px; /* Reduce padding for smaller screens */
+    }
+
+    .b1 {
+        font-size: 14px; /* Adjust button font size */
+    }
+
+    .span {
+        font-size: 0.8em; /* Adjust text size in smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        width: 90%; /* Nearly full-width for mobile */
+        padding: 15px;
+    }
+
+    .b1 {
+        padding: 8px 24px; /* Adjust button padding */
+        font-size: 14px;
+    }
+
+    input {
+        padding: 8px 15px; /* Adjust input padding for better fit */
+    }
+
+    .span {
+        font-size: 0.8em;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+    }
+}

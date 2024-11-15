@@ -1,26 +1,29 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
-import Header from './components/Header/Header'
 import Router from './routes/Router'
-import { UserDataProvider } from './contexts/UserContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { ProductDataProvider } from './contexts/ProductContext'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistor, Store } from './redux/Store'
+import { Provider } from 'react-redux'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
 
   return (
-    <UserDataProvider>
-      <ProductDataProvider>
+    
+    <PersistGate loading={null} persistor={persistor}>
+      <Provider store={Store}>
     <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Router/>}/>
         </Routes>
       </BrowserRouter>
       <ToastContainer/>
-      </ProductDataProvider>
-      </UserDataProvider>
+      </Provider>
+     </PersistGate>
+      
   )
 }
 

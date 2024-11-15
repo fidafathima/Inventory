@@ -1,30 +1,143 @@
-.main{
-    margin-top: 50px;
-    border: 1px groove;
-    box-shadow: black;
-    background-color: rgb(255, 255, 255);
-    width: 300px;
-    align-content: center;
-    padding: 30px 30px;
+/* Main container styling */
+.base01 {
+  display: flex;
+  width: 90%;
+  flex-direction: column; /*Stack elements vertically on small screens*/
+  align-items: center;
+  margin: auto;
 }
-.b1 {
-    margin-top: 10px;
-    border: none;
-    padding: 10px 32px;
-    font-size: 16px;
-    background-color:skyblue ;}
 
-    input{
-        border: 3px groove;
-        padding: 10px 20px;
-        
-    }
+/* Grid container styling */
+.grid {
+  margin-top: 40px;
+  display: flex;
+  overflow-x: auto;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Dynamic columns */
+  gap: 20px;
+  padding: 5px;
+  width: 100%; /* Full width for responsiveness */
+  max-width: 1200px; /* Limit the max width for larger screens */
+}
 
-    .span{
-        display: flex;
-        justify-content: space-between;
-    }
-    .t1{
-        color: skyblue;
-        text-decoration: underline;
-    }
+.grid2 {
+  border: 1px groove;
+  border-color: black;
+  box-shadow: 0 0 10px rgba(128, 128, 128, 0.5);
+  padding: 20px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  max-width: 250px; /*Limit image width*/
+  min-width: 200px;
+  object-fit: contain;
+}
+
+.text {
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.image1 {
+  width: 100px;
+  max-width: 600px; 
+  height: auto;
+  object-fit: contain;
+}
+
+.f1 {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px; /* Limit width for larger screens */
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.b11 {
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: rgb(8, 5, 5);
+  background-color: rgb(73, 177, 221);
+  cursor: pointer;
+  font: 1em sans-serif;
+}
+
+.b5 {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.b6 {
+  margin: auto; /* Center alignment for smaller screens */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Fewer columns */
+      padding: 5px 20px;
+  }
+
+  .f1 {
+      margin: 10px;
+      padding: 10px;
+  }
+
+  .wrapper {
+      gap: 15px;
+  }
+
+  .b11 {
+      padding: 8px 16px;
+      font-size: 14px;
+  }
+
+  .text, .image1 {
+      max-width: 90%; /* Fit to smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));; /* Single column */
+      padding: 5px 10px;
+  }
+
+  .f1 {
+      width: 100%; /* Full width on mobile */
+      padding: 10px;
+  }
+
+  .image1 {
+      max-width: 100%;
+      height: auto;
+  }
+
+  .wrapper {
+      flex-direction: column; /* Stack buttons vertically */
+      gap: 10px;
+  }
+
+  .b11 {
+      width: 100%;
+      font-size: 14px;
+  }
+}

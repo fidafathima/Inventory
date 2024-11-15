@@ -4,10 +4,14 @@ import * as yup from "yup";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import "./Login.css";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../redux/UserSlice";
 import UserContext from "../../contexts/UserContext";
 
 function Login() {
-  const { setUser } = useContext(UserContext);
+  const user=useSelector((state)=>state.user)
+  const  dispatch  = useDispatch();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -21,21 +25,39 @@ function Login() {
         .required("username is required"),
       password: yup.string().required("password required"),
     }),
-    onSubmit: async (user) => {
+    onSubmit: async (values) => {
       try {
         const response = await axios.post("http://127.0.0.1:8000/LoginView", {
-          username: user.username,
-          password: user.password,
+         
+          username: values.username,
+          password: values.password,
+          
         });
+        
         formik.resetForm();
-        setUser(response.data.user);
-        navigate('/p')
+        dispatch(
+          updateUser({
+            id: response.data.user.id,
+            username: response.data.user.username,
+            password: response.data.user.password,
+            token: response.data.access.token,
+          })
+        );
+        console.log(response)
+
+        
+        if (user.username=="Fidha") {
+          navigate("/dp");
+        }
+        else{navigate("/view");}
+        
       } catch (error) {
         console.log(error);
         toast.error(error.message);
       }
     },
   });
+  console.log(user)
   return (
     <div className="main">
       <form onSubmit={formik.handleSubmit}>

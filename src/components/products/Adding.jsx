@@ -6,87 +6,71 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import UserContext from "../../contexts/UserContext";
 import ProductContext from "../../contexts/ProductContext";
-import convertToBase64 from "../../utils/imageConverter";
 import { toast } from "react-toastify";
 
 function Adding() {
   const { user } = useContext(UserContext);
-  const [image, setImage] = useState(null);
-  const { setProduct } = useContext(ProductContext);
-  const [size, setSize] = useState([]);
-  const [color, setColor] = useState([]);
   const navigate = useNavigate();
+  
   const formik = useFormik({
     initialValues: {
       ProductID: "",
       ProductName: "",
       ProductCode: "",
-      CreatedUser: user?.id,
-      ProductImage: "",
-      size: "",
-      product_color:"",
+      ProductImage: null,
       TotalStock: "",
       UpdatedDate: "",
       IsFavourite: false,
       Active: false,
-      HSNCode: "",
+      
     },
     enableReinitialize: true,
     validationSchema: yup.object({
       ProductID: yup.string().max(20).required("id is required"),
       ProductName: yup.string().required("Name is required"),
       ProductCode: yup.string().required("Code is required"),
-      // ProductImage: yup.string(),
-      size: yup.string().required("select size"),
-      product_color: yup.string().required("select size"),
+      ProductImage: yup.mixed(),
       TotalStock: yup.string().required(" Add stock"),
       UpdatedDate: yup.string().required("add date"),
       IsFavourite: yup.string().required(),
       Active: yup.string().required(),
-      HSNCode: yup.string()
     }),
-    onSubmit: async (product) => {
+    onSubmit: async (values) => {
+      const formData = new FormData();
+      formData.append('ProductID', values.ProductID);
+      formData.append('ProductName', values.ProductName);
+      formData.append('ProductCode', values.ProductCode);
+      formData.append('TotalStock', values.TotalStock);
+      formData.append('UpdatedDate', values.UpdatedDate);
+      formData.append('IsFavourite', values.IsFavourite);
+      formData.append('Active', values.Active);
+      if (values.ProductImage) {
+        formData.append('ProductImage', values.ProductImage);
+      }
+
       try {
         const response = await axios.post(
           "http://127.0.0.1:8000/product",
-          product
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
         );
         console.log(response);
 
         formik.resetForm();
       } catch (error) {
         console.log(error);
+        toast(error.message);
       }
     },
   });
-
-  const convert = async (file) => {
-    try {
-      const image64 = await convertToBase64(file);
-      setImage(image64);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    (async () => {
-      try {
-        const {data} = await axios.get("http://127.0.0.1:8000/size");
-        setSize(data);
-        const response = await axios.get("http://127.0.0.1:8000/color");
-        setColor(response.data);
-        console.log(response);
-        // setLoading(false);
-      } catch (error) {
-        console.log(error);
-        // setLoading(false);
-      }
-    })();
-  }, []);
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
+    // if (!user) {
+    //   navigate("/");
+    // }
   }, [user]);
   console.log(formik.values);
   console.log(formik.errors);
@@ -96,7 +80,7 @@ function Adding() {
       <button className="b11" onClick={() => navigate("/view")}>
           All products
         </button>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit} >
         <label>
           <p>ProductID</p>
           <input
@@ -128,28 +112,6 @@ function Adding() {
           />
         </label>
         <label>
-          <p>size</p>
-          <select  value={formik.values.size} onChange={formik.handleChange} name="size" >
-            <option selected>Select a size</option>
-            {size.map((ele) => (
-              <option value={ele.id}>
-                {ele.size}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          <p>size</p>
-          <select name="product_color" onChange={formik.handleChange} value={formik.values.product_color}>
-            <option selected>Select a Color</option>
-            {color.map((ele) => (
-              <option value={ele.id} >
-                {ele.color}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
           <p>TotalStock</p>
           <input
            
@@ -173,7 +135,7 @@ function Adding() {
           <p>IsFavorite</p>
           <input
             
-            value={formik.values.IsFavorite}
+            value={formik.values.IsFavourite}
             onChange={formik.handleChange}
             type="Checkbox"
             name="IsFavorite"
@@ -189,26 +151,16 @@ function Adding() {
             name="Active"
           />
         </label>
-        <label>
-          <p>HCN</p>
-          <input
-        
-            value={formik.values.HSNCode}
-            onChange={formik.handleChange}
-            type="text"
-            name="HSNCode"
-          />
-        </label>
 
         <label>
           <p>Image</p>
           <input
-            placeholder="Enter your password"
             onChange={(e) =>
-              formik.setFieldValue("ProductImage", `${e.target.files}`)
+              formik.setFieldValue("ProductImage", e.target.files[0])
             }
             type="file"
             name="ProductImage"
+            accept="image/*"
           />
         </label>
         <br></br>
